@@ -11,7 +11,7 @@
     --crema:#FFEFE3;
     --rosa:#FBC3BC;
   }
-  body{ margin:0; background:#fff7f3; color:#2b2b2b; font-family:Arial, Helvetica, sans-serif; }
+  body{ margin:0; background:#FBC3BC; color:#2b2b2b; font-family:Arial, Helvetica, sans-serif; }
   .app{ max-width:1180px; margin:0 auto; padding:24px; }
   h1{ margin:0 0 6px; color:var(--vino); font-size:26px; }
   .sub{ margin:0 0 20px; color:#5d5d5d; }
@@ -36,7 +36,7 @@
   .tag{ font-size:11px; background:#FFEFE3; color:#6D0006; border:1px solid #FBC3BC; border-radius:999px; padding:4px 8px; white-space:nowrap; }
   .selected-item{ padding:10px; border:1px solid #f0d1cc; background:#fffafa; border-radius:10px; margin:8px 0; font-size:13px; }
   .selected-item b{ color:#6D0006; }
-  .copybox{ background:white; border-radius:14px; overflow:auto; border:1px solid #ead5d2; padding:12px; }
+  .copybox{ background:#FBC3BC; border-radius:14px; overflow:auto; border:1px solid #ead5d2; padding:12px; }
   #emailPreview{ width:100%; }
   .warning{ margin-top:12px; padding:10px 12px; border-radius:10px; background:#fff0ce; color:#654400; font-size:12px; line-height:1.45; }
   @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
@@ -497,11 +497,10 @@ function renderEmail(){
   ].join("");
 
   const email = `
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#FBC3BC; margin:0; padding:0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBC3BC" style="border-collapse:collapse; background-color:#FBC3BC; background:#FBC3BC; margin:0; padding:0;">
   <tr>
-    <td align="center" style="padding:18px 10px; background:#FBC3BC;">
-      <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px; border-collapse:collapse; background:#FBC3BC; border:1px solid #FBC3BC;">
-        <tr>
+    <td align="center" bgcolor="#FBC3BC" style="padding:18px 10px; background-color:#FBC3BC; background:#FBC3BC;">
+      <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBC3BC" style="width:640px; max-width:640px; border-collapse:collapse; background-color:#FBC3BC; background:#FBC3BC; border:1px solid #FBC3BC;">        <tr>
           <td style="padding:0;">
             <img src="${bannerUrl}" width="640" alt="Peruanos Sin Fronteras x MenstruAcción" style="width:100%; max-width:640px; display:block; border:0; outline:none; text-decoration:none;">
           </td>
