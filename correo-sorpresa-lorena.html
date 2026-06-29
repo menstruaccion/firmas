@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Correo sorpresa Lorena — Peruanos Sin Fronteras</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --rojo:#A80414;
+    --vino:#6D0006;
+    --crema:#FFEFE3;
+    --rosa:#FBC3BC;
+  }
+  body{ margin:0; background:#FBC3BC; color:#2b2b2b; font-family:Arial, Helvetica, sans-serif; }
+  .app{ max-width:1040px; margin:0 auto; padding:24px; }
+  h1{ margin:0 0 6px; color:var(--vino); font-size:26px; }
+  .sub{ margin:0 0 20px; color:#5d5d5d; line-height:1.45; }
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px; }
+  .tab{ display:inline-block; text-decoration:none; border-radius:999px; padding:10px 14px; font-weight:bold; font-size:14px; font-family:Arial, Helvetica, sans-serif; }
+  .tab.active{ background:var(--rojo); color:#fff; }
+  .tab.soft{ background:var(--crema); color:var(--vino); border:1px solid var(--rosa); }
+  .panel{ background:#fff; border:1px solid #f0d1cc; border-radius:14px; box-shadow:0 6px 18px rgba(109,0,6,0.08); padding:18px; }
+  .toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 12px; }
+  button{ border:0; border-radius:999px; padding:10px 14px; font-weight:bold; cursor:pointer; font-family:Arial, Helvetica, sans-serif; }
+  .btn-main{ background:var(--rojo); color:white; }
+  .btn-dark{ background:var(--vino); color:white; }
+  .btn-soft{ background:var(--crema); color:var(--vino); border:1px solid var(--rosa); }
+  .small{ font-size:12px; color:#686868; line-height:1.4; }
+  .subject{ background:#fffafa; border:1px solid #f0d1cc; border-radius:10px; padding:10px 12px; margin:10px 0 14px; font-size:13px; color:#333; }
+  .copybox{ background:#FBC3BC; border-radius:14px; overflow:auto; border:1px solid #ead5d2; padding:12px; }
+  #emailPreview{ width:100%; }
+  .warning{ margin-top:12px; padding:10px 12px; border-radius:10px; background:#fff0ce; color:#654400; font-size:12px; line-height:1.45; display:none; }
+  @media (max-width:700px){ .app{padding:16px;} h1{font-size:22px;} }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>Correo sorpresa — Lorena Mejía-Rodríguez</h1>
+  <p class="sub">Página lista para GitHub Pages. Abre este archivo desde <b>menstruaccion.github.io/firmas/</b>, copia el correo y pégalo en Gmail para avisar primero a quienes ya se registraron.</p>
+
+  <div class="tabs">
+    <a class="tab soft" href="index.html">Inicio</a>
+    <a class="tab soft" href="generador-email-psf.html">Generador de correos PSF</a>
+    <a class="tab soft" href="firma-equipo-peruanos-sin-fronteras.html">Firma equipo PSF</a>
+    <a class="tab active" href="correo-sorpresa-lorena.html">Correo sorpresa Lorena</a>
+  </div>
+
+  <div class="panel">
+    <div class="toolbar">
+      <button class="btn-soft" onclick="copiarAsunto()">Copiar asunto</button>
+      <button class="btn-main" onclick="seleccionarCorreo()">Seleccionar correo</button>
+      <button class="btn-dark" onclick="copiarCorreo()">Copiar correo</button>
+    </div>
+    <div class="subject"><b>Asunto sugerido:</b> <span id="subjectText">Ustedes se enteran primero: nueva masterclass sorpresa para llegar a Harvard 100% becad@ 🚀</span></div>
+    <p class="small">Después de copiar: Gmail → Nuevo correo → pega con Ctrl+V. El banner e íconos usan las rutas del repo: <b>assets/banner-psf.png</b> y los íconos sociales dentro de <b>assets/</b>.</p>
+    <div id="imageWarning" class="warning">Estás abriendo el archivo localmente. Para que Gmail mantenga el banner e íconos, súbelo al repo y ábrelo desde GitHub Pages antes de copiar.</div>
+    <div class="copybox"><div id="emailPreview"></div></div>
+  </div>
+</div>
+
+<script>
+const LINKS = {
+  instagram: "https://www.instagram.com/menstruaccion.pe/",
+  whatsapp: "https://wa.me/message/2GKKV7CKI7X7D1",
+  facebook: "https://www.facebook.com/menstruaccion.pe/",
+  tiktok: "https://www.tiktok.com/@menstruaccion.pe",
+  youtube: "https://www.youtube.com/@menstruaccion",
+  linkedin: "https://www.linkedin.com/company/menstruaccion/",
+  form: "https://forms.gle/mJHGFiitBQd1yXMo9",
+  impacto: "https://menstruaccion.org/charlas/de-la-idea-a-la-accion"
+};
+const SUBJECT = "Ustedes se enteran primero: nueva masterclass sorpresa para llegar a Harvard 100% becad@ 🚀";
+
+function asset(path){
+  return new URL(path, window.location.href).href;
+}
+
+function socialIcon(iconPath, label, href){
+  const iconUrl = asset(iconPath);
+  return `<a href="${href}" target="_blank" style="text-decoration:none; display:inline-block; margin:0 5px;">
+    <img src="${iconUrl}" width="26" height="26" alt="${label}" style="border:0; outline:none; text-decoration:none; display:inline-block; vertical-align:middle;">
+  </a>`;
+}
+
+function renderEmail(){
+  const bannerUrl = asset("assets/banner-psf.png");
+  const socials = [
+    socialIcon("assets/instagram.png", "Instagram", LINKS.instagram),
+    socialIcon("assets/whatsapp.png", "WhatsApp", LINKS.whatsapp),
+    socialIcon("assets/facebook.png", "Facebook", LINKS.facebook),
+    socialIcon("assets/tiktok.png", "TikTok", LINKS.tiktok),
+    socialIcon("assets/youtube.png", "YouTube", LINKS.youtube),
+    socialIcon("assets/linkedin.png", "LinkedIn", LINKS.linkedin),
+  ].join("");
+
+  const email = `
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBC3BC" style="border-collapse:collapse; background-color:#FBC3BC; background:#FBC3BC; margin:0; padding:0;">
+  <tr>
+    <td align="center" bgcolor="#FBC3BC" style="padding:18px 10px; background-color:#FBC3BC; background:#FBC3BC;">
+      <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBC3BC" style="width:640px; max-width:640px; border-collapse:collapse; background-color:#FBC3BC; background:#FBC3BC; border:1px solid #FBC3BC;">
+        <tr>
+          <td style="padding:0;">
+            <img src="${bannerUrl}" width="640" alt="Peruanos Sin Fronteras x MenstruAcción" style="width:100%; max-width:640px; display:block; border:0; outline:none; text-decoration:none;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 10px 32px; font-family:Arial,Helvetica,sans-serif; color:#333333;">
+            <div style="font-size:22px; line-height:28px; color:#6D0006; font-weight:bold; text-align:center;">¡Familia de Peruanos Sin Fronteras, tenemos una sorpresa enorme! 🚀🇵🇪</div>
+
+            <p style="font-size:15px; line-height:23px; margin:22px 0 0 0;">Les escribimos antes que a nadie porque ustedes ya son parte de <b>Peruanos Sin Fronteras</b>. Gracias por haberse sumado a esta campaña que no solo abre puertas para jóvenes peruanos, sino que también nos ayuda a llevar educación, productos sostenibles y acompañamiento a niñas y adolescentes en el Perú que más lo necesitan. 🫶</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">Hoy acabamos de abrir una <b>charla nueva, sorpresa y absolutamente imperdible</b>:</p>
+
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate; border-spacing:0; margin:18px 0 16px 0; background:#FFEFE3; border:1px solid #FBC3BC; border-radius:14px;">
+              <tr>
+                <td style="padding:20px 20px 18px 20px; font-family:Arial,Helvetica,sans-serif;">
+                  <div style="font-size:12px; line-height:16px; color:#6D0006; font-weight:bold; text-transform:uppercase; letter-spacing:0.4px;">Nueva masterclass sorpresa</div>
+                  <div style="font-size:20px; line-height:26px; color:#2b2b2b; font-weight:bold; margin-top:5px;">La estrategia que me llevó a Harvard 100% becada</div>
+                  <div style="font-size:15px; line-height:22px; color:#6D0006; margin-top:8px; font-weight:bold;">Con Lorena Mejía-Rodríguez</div>
+                  <div style="font-size:14px; line-height:21px; color:#444444; margin-top:8px;">📅 <b>Lunes 6 de julio</b> · 4:00–5:00 PM</div>
+                  <div style="font-size:14px; line-height:21px; color:#444444; margin-top:8px;">💗 <b>Solo S/5 para todos</b> · 🌎 <b>US$5 o equivalente internacional</b></div>
+                </td>
+              </tr>
+            </table>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;"><b>Lorena es Master in Public Administration por Harvard Kennedy School con beca completa</b>, Fulbright Scholar, John F. Kennedy Scholar y Public Service Fellow por Harvard University. Además, es una líder en innovación pública y desarrollo internacional con más de 15 años de experiencia, ex Chief of Party de una alianza de USAID de US$38 millones y movilizadora de más de US$1 millón para iniciativas de derechos humanos y justicia ambiental.</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">En esta masterclass, Lorena va a desglosar con total claridad cómo construyó su aplicación a Harvard desde cero: selección de programas y becas, ensayos, cartas de recomendación, narrativa personal, documentos, errores frecuentes, LinkedIn, estrategia internacional y hasta cómo se preparó de forma autónoma para subir su TOEFL de 96 a 109 puntos.</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">Esta charla es para escolares que sueñan con estudiar fuera, universitarios que no saben por dónde empezar, profesionales que quieren dar un salto internacional, familias que quieren entender cómo apoyar estos procesos y cualquier persona que alguna vez pensó que una beca completa en una universidad como Harvard era algo demasiado lejano.</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">La sinopsis completa también está publicada en el <a href="${LINKS.impacto}" target="_blank" style="color:#A80414; font-weight:bold; text-decoration:underline;">Bloque de Impacto: De la Idea a la Acción</a>, junto con las demás masterclasses de herramientas concretas para construir oportunidades internacionales.</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;"><b>No hay forma de que se pierdan esta charla.</b> Y por eso la hemos puesto a un costo simbólico de solo <b>S/5</b>, o <b>US$5 / equivalente internacional</b>, para que más personas puedan acceder y seguir sumándose a este movimiento por la juventud y las niñas peruanas.</p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:22px auto 18px auto; border-collapse:collapse;">
+              <tr>
+                <td bgcolor="#A80414" style="border-radius:999px; text-align:center;">
+                  <a href="${LINKS.form}" target="_blank" style="display:inline-block; padding:13px 24px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:999px;">Volver al formulario y añadir esta masterclass</a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">Para registrarse, solo deben <a href="${LINKS.form}" target="_blank" style="color:#A80414; font-weight:bold; text-decoration:underline;">volver al formulario de inscripción</a>, llenarlo nuevamente y seleccionar la charla de Lorena. Si ya se habían inscrito antes, no hay problema: este nuevo envío es solo para añadir esta masterclass a su registro.</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">Gracias por estar aquí desde el inicio. Ustedes se están enterando primero porque ya forman parte de esta familia, y de verdad queremos verlos en esta sesión. Sigamos cruzando fronteras, abriendo oportunidades y convirtiendo cada inscripción en impacto real para el Perú. 💗🇵🇪</p>
+
+            <p style="font-size:15px; line-height:23px; margin:16px 0 0 0;">Nuestra línea de ayuda de WhatsApp está abierta 24/7 para ustedes: <a href="https://wa.me/51977632289" target="_blank" style="color:#A80414; font-weight:bold; text-decoration:none;">977 632 289</a> 💬</p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:24px 32px 30px 32px; font-family:Arial,Helvetica,sans-serif; color:#6D0006; text-align:center;">
+            <div style="height:1px; line-height:1px; background:#FBC3BC; width:80%; margin:0 auto 20px auto;">&nbsp;</div>
+            <div style="font-size:15px; line-height:23px;">Con muchísimo cariño,</div>
+            <div style="font-size:17px; line-height:24px; font-weight:bold;">Equipo Organizador de Peruanos Sin Fronteras</div>
+            <div style="font-size:15px; line-height:23px;">MenstruAcción</div>
+            <div style="margin-top:15px; text-align:center;">${socials}</div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>`;
+
+  document.getElementById("emailPreview").innerHTML = email;
+}
+
+function seleccionarCorreo(){
+  const node = document.getElementById("emailPreview");
+  const range = document.createRange();
+  range.selectNodeContents(node);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+function copiarCorreo(){
+  seleccionarCorreo();
+  const ok = document.execCommand("copy");
+  if (ok) alert("Correo copiado. Ahora pégalo en Gmail con Ctrl+V.");
+  else alert("Seleccioné el correo. Presiona Ctrl+C y pégalo en Gmail.");
+}
+
+async function copiarAsunto(){
+  try{
+    await navigator.clipboard.writeText(SUBJECT);
+    alert("Asunto copiado.");
+  } catch(e){
+    const temp = document.createElement("textarea");
+    temp.value = SUBJECT;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+    alert("Asunto copiado.");
+  }
+}
+
+if (window.location.protocol === "file:") {
+  document.getElementById("imageWarning").style.display = "block";
+}
+renderEmail();
+</script>
+</body>
+</html>
